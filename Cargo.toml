@@ -1,5 +1,5 @@
 [workspace]
-members = ["locode-core","locode-cli"]
+members = ["lococode-core","lococode-cli"]
 resolver = "3"
 
 [profile.release]

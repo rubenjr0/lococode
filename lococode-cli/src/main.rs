@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 use clap::{Args, Parser};
-use locode_core::Coordinates;
+use lococode_core::Coordinates;
 
 #[derive(Debug, Args)]
 struct CoordinateSource {
