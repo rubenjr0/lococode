@@ -1,0 +1,8 @@
+[package]
+name = "locode"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+locode-core.path = "../locode-core"
+clap = { version = "4.5.59", features = ["derive"] }

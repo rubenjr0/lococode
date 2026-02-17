@@ -1,0 +1,7 @@
+[workspace]
+members = ["locode-core","locode-cli"]
+resolver = "3"
+
+[profile.release]
+opt-level = "s"
+lto = "thin"
