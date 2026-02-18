@@ -2,6 +2,13 @@
 members = ["lococode-core","lococode-cli"]
 resolver = "3"
 
+[workspace.package]
+version = "0.1.0"
+authors = ["rubenjr0"]
+description = "Location codes inspired by Google's Plus Codes (Open Location Code)"
+license = "AGPL-3.0-or-later"
+repository = "https://github.com/rubenjr0/lococode"
+
 [profile.release]
 opt-level = "s"
 lto = "thin"
