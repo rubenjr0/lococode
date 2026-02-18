@@ -8,6 +8,7 @@ authors = ["rubenjr0"]
 description = "Location codes inspired by Google's Plus Codes (Open Location Code)"
 license = "AGPL-3.0-or-later"
 repository = "https://github.com/rubenjr0/lococode"
+readme = "README.md"
 
 [profile.release]
 opt-level = "s"
