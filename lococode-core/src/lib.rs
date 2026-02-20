@@ -1,5 +1,11 @@
 use std::fmt;
 
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
+
+#[cfg(target_arch = "wasm32")]
+mod wasm;
+
 const K: usize = 56;
 const SCALE: f64 = (1u64 << K) as f64;
 const ALPHABET: [char; 32] = [
@@ -15,8 +21,10 @@ pub struct Coordinates<T> {
 }
 
 #[derive(Debug)]
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub struct Decoded {
-    pub center: Coordinates<f64>,
+    pub latitude: f64,
+    pub longitude: f64,
     pub lat_half_extent_deg: f64,
     pub lon_half_extent_deg: f64,
     pub lat_half_extent_m: f64,
@@ -69,7 +77,8 @@ impl Coordinates<f64> {
             lon_half_extent_deg * meters_per_degree_lon(center.latitude.to_radians());
         let error_radius_m = lat_half_extent_m.hypot(lon_half_extent_m);
         Decoded {
-            center,
+            latitude: center.latitude,
+            longitude: center.longitude,
             lat_half_extent_deg,
             lon_half_extent_deg,
             lat_half_extent_m,
@@ -177,8 +186,9 @@ impl fmt::Display for Decoded {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "- Center.......... {}\n- Radial bounds... ±{:.6}, ±{:.6}\n- Metric bounds... ±{:.3}, ±{:.3}\n- Error radius.... {:.3}",
-            self.center,
+            "- Center.......... {:.6}, {:.6}\n- Radial bounds... ±{:.6}, ±{:.6}\n- Metric bounds... ±{:.3}, ±{:.3}\n- Error radius.... {:.3}",
+            self.latitude,
+            self.longitude,
             self.lat_half_extent_deg,
             self.lon_half_extent_deg,
             self.lat_half_extent_m,
@@ -201,8 +211,8 @@ mod tests {
         println!("Encoded as {code}");
         let decoded = Coordinates::<f64>::decode(&code);
 
-        let abs_err_lat = (c.latitude - decoded.center.latitude).abs();
-        let abs_err_lon = (c.longitude - decoded.center.longitude).abs();
+        let abs_err_lat = (c.latitude - decoded.latitude).abs();
+        let abs_err_lon = (c.longitude - decoded.longitude).abs();
 
         println!("err: {abs_err_lat:.6}, {:.6}", decoded.lat_half_extent_deg);
         println!("err: {abs_err_lon:.6}, {:.6}", decoded.lon_half_extent_deg);

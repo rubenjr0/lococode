@@ -9,5 +9,6 @@ repository.workspace = true
 readme.workspace = true
 
 [dependencies]
-lococode-core = {version = "0.1", path = "../lococode-core"}
-clap = { version = "4.5.59", features = ["derive"] }
+anyhow = "1.0.102"
+clap = { version = "4.5.60", features = ["derive"] }
+lococode-core = { version = "0.1.1", path = "../lococode-core" }
